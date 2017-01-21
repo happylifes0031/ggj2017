@@ -30,3 +30,8 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
+
+# OS
+thumbs.db
+.DS_Store
+
