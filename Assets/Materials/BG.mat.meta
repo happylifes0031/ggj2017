@@ -1,6 +1,11 @@
 fileFormatVersion: 2
+<<<<<<< 265101825eca32cd9505315990ff8dd2a0b25bfa:Assets/Materials/BG.mat.meta
 guid: 3f2ac5469fdd74225b5289659210527a
 timeCreated: 1485012832
+=======
+guid: 021542ed2ee9a48ebbf9a45068804994
+timeCreated: 1485029337
+>>>>>>> Nodes are beautiful now:Assets/Prefabs/Node.prefab.meta
 licenseType: Free
 NativeFormatImporter:
   userData: 
