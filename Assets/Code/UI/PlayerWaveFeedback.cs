@@ -13,6 +13,8 @@ public class PlayerWaveFeedback : MonoBehaviour {
 	// PlayerWaveFeedback.playerWaveFeedback.ShowFeedback();
 	public static PlayerWaveFeedback playerWaveFeedback;
 	public float WaveGrowSpeed = 0.3f;
+	public float BlinkDuration = 0.17f;
+	public float PulseSpeed = 4.0f;
 
 	private GameObject waveBase;
 	private Sprite waveSprite;
@@ -34,25 +36,30 @@ public class PlayerWaveFeedback : MonoBehaviour {
 		waveBase.AddComponent<SpriteRenderer>();
 		waveBase.SetActive(false);
 
-		SpriteRenderer renderer = waveBase.GetComponent<SpriteRenderer>();
-		renderer.sprite = waveSprite;
-		renderer.sortingLayerName = "Gameplay";
+		SpriteRenderer feedbackRenderer = waveBase.GetComponent<SpriteRenderer>();
+		feedbackRenderer.sprite = waveSprite;
+		feedbackRenderer.sortingLayerName = "Gameplay";
 	}
-	
+
+	public float incrementalVal;
 	void Update () {
 		if (touchingTheScreen) {
 			touchDuration = Mathf.Min(Time.time - startTime, maxDuration);
 
 			if (touchDuration < maxDuration) {
+				incrementalVal = 0f;
 				float incrementalScale = feedbackWave.speed * touchDuration;
 
 				float xScale = feedbackWave.obj.transform.localScale.x;
 				float yScale = feedbackWave.obj.transform.localScale.y;
 				feedbackWave.obj.transform.localScale = new Vector3 (xScale + incrementalScale, yScale + incrementalScale, 1.0f);
 			} else {
-				feedbackWave.obj.SetActive(!feedbackWave.obj.activeSelf);
+				incrementalVal += Time.deltaTime * PulseSpeed;
+				float alpha = 0.5f * (Mathf.Sin (incrementalVal) + 1f);
 
-				StartCoroutine("Blink");
+				SpriteRenderer feedbackRenderer = feedbackWave.obj.GetComponent<SpriteRenderer> ();
+				feedbackRenderer.color *= new Color (1f, 1f, 1f, 0f);
+				feedbackRenderer.color += new Color (0f,0f,0f, alpha);
 			}
 		}
 	}
@@ -73,11 +80,9 @@ public class PlayerWaveFeedback : MonoBehaviour {
 
 	public void HideFeedback() {
 		touchingTheScreen = false;
-		Destroy(feedbackWave.obj);
 		touchDuration = 0.0f;
-	}
+		Destroy(feedbackWave.obj);
 
-	IEnumerator Blink() {
-		yield return new WaitForSeconds(0.3f);
+		return;
 	}
 }
