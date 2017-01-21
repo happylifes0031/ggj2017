@@ -41,11 +41,12 @@ public class MovesToNodes : MonoBehaviour
 		}*/
 	}
 
-	void OnCollisionEnter2D(Collision2D coll)
+	void OnCollisionStay2D(Collision2D coll)
 	{
 		foreach(ContactPoint2D contact in coll.contacts)
 		{
-			body.AddForce(contact.normal * 20.0f);
+			body.AddForce(contact.normal * 5.0f);
+			
 		}		
 	}
 }
