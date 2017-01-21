@@ -17,6 +17,7 @@ public class GameFlow : MonoBehaviour
 		if(Input.GetButtonDown("Fire1"))
 		{
 			startTimeSeconds = Time.time;
+			PlayerWaveFeedback.playerWaveFeedback.ShowFeedback ();
 		}
 
 		// end press and spawn wave
@@ -29,6 +30,7 @@ public class GameFlow : MonoBehaviour
 			Vector3 normal = Vector3.up;
 
 			GameState.gameState.playerWaves.AddNewWave(position, normal, delta);
+			PlayerWaveFeedback.playerWaveFeedback.HideFeedback ();
 		}
 	}
 }
