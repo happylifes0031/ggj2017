@@ -24,6 +24,7 @@ public class PlayerWaveFeedback : MonoBehaviour {
 
 		waveBase = new GameObject();
 		waveBase.AddComponent<SpriteRenderer>();
+		waveBase.SetActive(false);
 
 		SpriteRenderer renderer = waveBase.GetComponent<SpriteRenderer>();
 		renderer.sprite = waveSprite;
@@ -41,6 +42,8 @@ public class PlayerWaveFeedback : MonoBehaviour {
 			feedbackWave.speed = WaveGrowSpeed;
 
 			feedbackWave.obj = Instantiate(waveBase, new Vector3(p.x, p.y, 1.0f), Quaternion.identity);
+
+			feedbackWave.obj.SetActive(true);
 		}
 
 		if (touchingTheScreen) {

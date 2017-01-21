@@ -25,7 +25,7 @@ public class PlayerWaves : MonoBehaviour
 	public void AddNewWave(Vector3 worldPos, Vector3 worldNormal, float timePressedSecond)
 	{
 		PlayerWave wave = new PlayerWave();
-		wave.MaxLifeTimeSeconds = Mathf.Min(timePressedSecond * LifeTimeSecondsMultiplier, MinimumLifeTimeSeconds);
+		wave.MaxLifeTimeSeconds = Mathf.Max(timePressedSecond * LifeTimeSecondsMultiplier, MinimumLifeTimeSeconds);
 		wave.CurrentLifeTimeSeconds = wave.MaxLifeTimeSeconds;
 		wave.ScaleUnitsPerSecond = StrengthUnitsSecondsMultiplier;
 
@@ -43,7 +43,7 @@ public class PlayerWaves : MonoBehaviour
 		Waves = new List<PlayerWave>();
 
 		// cache sprite and base object
-		waveSprite = Resources.Load<Sprite>("clickArt");
+		waveSprite = Resources.Load<Sprite>("WaveArt");
 		basePlayerWave = new GameObject();
 		basePlayerWave.SetActive(false);
 		SpriteRenderer renderer = basePlayerWave.AddComponent<SpriteRenderer>();

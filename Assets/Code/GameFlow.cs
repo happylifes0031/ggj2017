@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class screenClickEvent : MonoBehaviour
+public class GameFlow : MonoBehaviour
 {
 	public float maxLifeTimeSeconds = 5.0f;
 	private float startTimeSeconds = 0.0f;
