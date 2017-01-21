@@ -14,7 +14,6 @@ public class PlayerWaveFeedback : MonoBehaviour {
 	public static PlayerWaveFeedback playerWaveFeedback;
 	public float WaveGrowSpeed = 0.3f;
 
-	private GameState gameState;
 	private GameObject waveBase;
 	private Sprite waveSprite;
 	private FeedbackWave feedbackWave;
@@ -29,7 +28,6 @@ public class PlayerWaveFeedback : MonoBehaviour {
 	}
 
 	void Start () {
-		gameState = GameObject.Find ("GameState").GetComponent<GameState> ();
 		waveSprite = Resources.Load<Sprite>("ClickArt");
 
 		waveBase = new GameObject();
@@ -51,6 +49,10 @@ public class PlayerWaveFeedback : MonoBehaviour {
 				float xScale = feedbackWave.obj.transform.localScale.x;
 				float yScale = feedbackWave.obj.transform.localScale.y;
 				feedbackWave.obj.transform.localScale = new Vector3 (xScale + incrementalScale, yScale + incrementalScale, 1.0f);
+			} else {
+				feedbackWave.obj.SetActive(!feedbackWave.obj.activeSelf);
+
+				StartCoroutine("Blink");
 			}
 		}
 	}
@@ -73,5 +75,9 @@ public class PlayerWaveFeedback : MonoBehaviour {
 		touchingTheScreen = false;
 		Destroy(feedbackWave.obj);
 		touchDuration = 0.0f;
+	}
+
+	IEnumerator Blink() {
+		yield return new WaitForSeconds(0.3f);
 	}
 }
