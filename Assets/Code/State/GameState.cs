@@ -6,15 +6,13 @@
 /// </summary>
 public class GameState : MonoBehaviour
 {
-	public PlayerWaves playerWaves; 
+	public PlayerWaves playerWaves { get; private set; }
 	public static GameState gameState;
 
-	void Awake() {
+	void Awake()
+	{
 		// Make sure there's only one instance of the game state
 		gameState = this;
-
-		if (gameState.playerWaves == null) {
-			gameState.playerWaves = new PlayerWaves ();
-		}
+		playerWaves = this.gameObject.GetComponent<PlayerWaves>();
 	}
 }
