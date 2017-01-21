@@ -7,7 +7,9 @@ public class GameFlow : MonoBehaviour
 	private float startTimeSeconds = 0.0f;
 
 	// Use this for initialization
-	void Start () {
+	void Start ()
+	{
+
 	}
 	
 	// Update is called once per frame
