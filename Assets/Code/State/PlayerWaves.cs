@@ -13,9 +13,9 @@ public class PlayerWave
 
 public class PlayerWaves : MonoBehaviour
 {
-	public float LifeTimeSecondsMultiplier = 5.0f;
+	public float LifeTimeSecondsMultiplier = 3.0f;
 	public float StrengthUnitsSecondsMultiplier = 1.0f;
-	public float MinimumLifeTimeSeconds = 2.0f;
+	public float MinimumLifeTimeSeconds = 0.2f;
 	
 	public List<PlayerWave> Waves { get; private set; }
 
@@ -68,8 +68,10 @@ public class PlayerWaves : MonoBehaviour
 			//renderer.color *= new Color( 1.0f, 1.0f, 1.0f, uniformLifeTime);
 			
 			// update lifetime and kill waves that died
-			if (wave.CurrentLifeTimeSeconds <= 0.0f)
-				wavesToDelete.Add(wave);
+			if (wave.CurrentLifeTimeSeconds <= 0.0f) {
+				wavesToDelete.Add (wave);
+			}
+
 			wave.CurrentLifeTimeSeconds -= Time.deltaTime;
 		}
 
