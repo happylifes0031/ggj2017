@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent (typeof(Rigidbody))]
+[RequireComponent (typeof(Rigidbody2D))]
 
 public class MovesToNodes : MonoBehaviour
 {
 	public float AttractionForce = 0.025f;
-	private Rigidbody body;
+	private Rigidbody2D body;
 
 	void Start ()
 	{
-		body = this.gameObject.GetComponent<Rigidbody> ();
+		body = this.gameObject.GetComponent<Rigidbody2D> ();
 	}
 
 	void Update ()
@@ -21,6 +21,7 @@ public class MovesToNodes : MonoBehaviour
 
 	private void moveToNodesWithTag (string tag)
 	{
+		/*
 		List<GameObject> allNodes = new List<GameObject> (GameObject.FindGameObjectsWithTag (tag));
 
 		foreach (GameObject node in allNodes) {
@@ -37,6 +38,14 @@ public class MovesToNodes : MonoBehaviour
 
 				body.AddForce(forceToOtherNode);
 			}
-		}
+		}*/
+	}
+
+	void OnCollisionEnter2D(Collision2D coll)
+	{
+		foreach(ContactPoint2D contact in coll.contacts)
+		{
+			body.AddForce(contact.normal * 20.0f);
+		}		
 	}
 }

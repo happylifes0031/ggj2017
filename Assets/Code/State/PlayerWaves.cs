@@ -8,6 +8,7 @@ public class PlayerWave
 	public float MaxLifeTimeSeconds { get; set; }
 	public float CurrentLifeTimeSeconds { get; set; }
 	public float ScaleUnitsPerSecond { get; set; }
+	public float CurrentScale { get; set; }
 	public GameObject Obj { get; set; }
 }
 
@@ -30,10 +31,21 @@ public class PlayerWaves : MonoBehaviour
 		wave.ScaleUnitsPerSecond = StrengthUnitsSecondsMultiplier;
 
 		// rotate up towards normal of surface
+		Vector3 worldPosNoZ = new Vector3(worldPos.x, worldPos.y, -0.1f);
 		Quaternion rotateUpTowardsNormal = Quaternion.FromToRotation(Vector3.up, worldNormal);
-		wave.Obj = Object.Instantiate(basePlayerWave, worldPos, rotateUpTowardsNormal);
+		wave.Obj = Object.Instantiate(basePlayerWave, worldPosNoZ, rotateUpTowardsNormal);
 		wave.Obj.SetActive(true);
 		wave.Obj.transform.localScale = new Vector3(0.0f, 0.0f, 1.0f);
+
+		CircleCollider2D sphereColider = wave.Obj.AddComponent<CircleCollider2D>();
+		sphereColider.radius = 0.5f;
+
+		Rigidbody2D rigidBody = wave.Obj.AddComponent<Rigidbody2D>();
+
+		rigidBody.constraints = RigidbodyConstraints2D.FreezeRotation;
+		rigidBody.constraints |= RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY;
+		rigidBody.gravityScale = 0.0f;
+		rigidBody.collisionDetectionMode = CollisionDetectionMode2D.Discrete;
 
 		Waves.Add(wave);
 	}
@@ -60,6 +72,7 @@ public class PlayerWaves : MonoBehaviour
 			// scale game object
 			float currentScale = (wave.MaxLifeTimeSeconds - wave.CurrentLifeTimeSeconds) * wave.ScaleUnitsPerSecond;
 			wave.Obj.transform.localScale = new Vector3(currentScale, currentScale, 1.0f);
+			wave.CurrentScale = currentScale;
 
 			// render game object fade
 			float uniformLifeTime = wave.CurrentLifeTimeSeconds / wave.MaxLifeTimeSeconds;

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class GameFlow : MonoBehaviour
 {
@@ -29,6 +30,29 @@ public class GameFlow : MonoBehaviour
 			Vector3 normal = Vector3.up;
 
 			GameState.gameState.playerWaves.AddNewWave(position, normal, delta);
+		}
+
+		ResolveNodes();
+    }
+
+	void ResolveInput()
+	{
+
+	}
+
+	void ResolveNodes()
+	{
+		return;
+
+		List<GameObject> allNodes = new List<GameObject>(GameObject.FindGameObjectsWithTag("Node"));
+		foreach (PlayerWave wave in GameState.gameState.playerWaves.Waves)
+		{
+			SphereCollider waveCollider = wave.Obj.GetComponent<SphereCollider>();
+
+			foreach(GameObject gameObject in allNodes)
+			{
+
+			}
 		}
 	}
 }
