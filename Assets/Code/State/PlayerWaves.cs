@@ -40,13 +40,13 @@ public class PlayerWaves : MonoBehaviour
 		CircleCollider2D sphereColider = wave.Obj.AddComponent<CircleCollider2D>();
 		sphereColider.radius = 0.5f;
 
+		/*
 		Rigidbody2D rigidBody = wave.Obj.AddComponent<Rigidbody2D>();
-
 		rigidBody.constraints = RigidbodyConstraints2D.FreezeRotation;
 		rigidBody.constraints |= RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY;
 		rigidBody.gravityScale = 0.0f;
 		rigidBody.collisionDetectionMode = CollisionDetectionMode2D.Discrete;
-
+		*/
 		Waves.Add(wave);
 	}
 
@@ -58,6 +58,7 @@ public class PlayerWaves : MonoBehaviour
 		waveSprite = Resources.Load<Sprite>("WaveArt");
 		basePlayerWave = new GameObject();
 		basePlayerWave.SetActive(false);
+		basePlayerWave.layer = 8;
 		SpriteRenderer renderer = basePlayerWave.AddComponent<SpriteRenderer>();
 		renderer.sprite = waveSprite;
 		renderer.sortingLayerName = "Gameplay";

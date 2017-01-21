@@ -46,6 +46,7 @@ public class MovesToNodes : MonoBehaviour
 		foreach(ContactPoint2D contact in coll.contacts)
 		{
 			body.AddForce(contact.normal * 5.0f);
+			print("test");
 			
 		}		
 	}
