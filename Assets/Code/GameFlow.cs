@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class GameFlow : MonoBehaviour
 {
-	public float maxLifeTimeSeconds = 5.0f;
+	public float maxLifeTimeSeconds = 2.0f;
 	private float startTimeSeconds = 0.0f;
 
 	// Use this for initialization
@@ -18,7 +18,7 @@ public class GameFlow : MonoBehaviour
 		if(Input.GetButtonDown("Fire1"))
 		{
 			startTimeSeconds = Time.time;
-			PlayerWaveFeedback.playerWaveFeedback.ShowFeedback ();
+			PlayerWaveFeedback.playerWaveFeedback.ShowFeedback (maxLifeTimeSeconds);
 		}
 
 		// end press and spawn wave
@@ -44,7 +44,7 @@ public class GameFlow : MonoBehaviour
 
 	void ResolveNodes()
 	{
-		return;
+		return; // TODO check why this code is unreachable
 
 		List<GameObject> allNodes = new List<GameObject>(GameObject.FindGameObjectsWithTag("Node"));
 		foreach (PlayerWave wave in GameState.gameState.playerWaves.Waves)

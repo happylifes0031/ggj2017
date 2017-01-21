@@ -22,6 +22,7 @@ public class PlayerWaveFeedback : MonoBehaviour {
 	private bool touchingTheScreen = false;
 	private float touchDuration = 0.0f;
 	private Vector3 touchPosition;
+	private float maxDuration = 3.0f;
 
 	void Awake() {
 		playerWaveFeedback = this;
@@ -42,16 +43,20 @@ public class PlayerWaveFeedback : MonoBehaviour {
 	
 	void Update () {
 		if (touchingTheScreen) {
-			touchDuration = Mathf.Min(Time.time - startTime, 3.0f);
-			float incrementalScale = feedbackWave.speed * touchDuration;
+			touchDuration = Mathf.Min(Time.time - startTime, maxDuration);
 
-			float xScale = feedbackWave.obj.transform.localScale.x;
-			float yScale = feedbackWave.obj.transform.localScale.y;
-			feedbackWave.obj.transform.localScale = new Vector3(xScale + incrementalScale, yScale + incrementalScale, 1.0f);
+			if (touchDuration < maxDuration) {
+				float incrementalScale = feedbackWave.speed * touchDuration;
+
+				float xScale = feedbackWave.obj.transform.localScale.x;
+				float yScale = feedbackWave.obj.transform.localScale.y;
+				feedbackWave.obj.transform.localScale = new Vector3 (xScale + incrementalScale, yScale + incrementalScale, 1.0f);
+			}
 		}
 	}
 
-	public void ShowFeedback() {
+	public void ShowFeedback(float maxInputDuration) {
+		maxDuration = maxInputDuration;
 		touchingTheScreen = true;
 		startTime = Time.time;
 
