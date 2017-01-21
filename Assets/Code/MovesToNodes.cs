@@ -11,7 +11,6 @@ public class MovesToNodes : MonoBehaviour
 
 	void Start ()
 	{
-		attractionForce = 0.003f;
 		body = this.gameObject.GetComponent<Rigidbody> ();
 	}
 
@@ -30,15 +29,14 @@ public class MovesToNodes : MonoBehaviour
 		foreach (GameObject otherNode in otherNodes) {
 			float distanceToOtherNode = Vector3.Distance (otherNode.transform.position, gameObject.transform.position);
 			float forceMagnitude = 0;
-			Vector3 forceToOtherNode;
-			Rigidbody otherBody;
-			Vector3 toOtherNode;
 
 			if (distanceToOtherNode > 0) {
 				forceMagnitude = ((1 / distanceToOtherNode) + 1) * attractionForce;
 			}
 
 			if (forceMagnitude > 0) {
+				Vector3 forceToOtherNode, toOtherNode;
+
 				toOtherNode = otherNode.transform.position - gameObject.transform.position;
 				forceToOtherNode = toOtherNode * forceMagnitude;
 				body.AddForce(forceToOtherNode); 
