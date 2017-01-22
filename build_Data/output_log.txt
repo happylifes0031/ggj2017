@@ -1,0 +1,43 @@
+Initialize engine version: 5.5.0f3 (38b4efef76f0)
+GfxDevice: creating device client; threaded=1
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.0]
+    Renderer: Intel(R) Iris(TM) Graphics 5100 (ID=0xa2e)
+    Vendor:   Intel
+    VRAM:     1136 MB
+    Driver:   20.19.15.4531
+Begin MonoManager ReloadAssembly
+Platform assembly: D:\Dev\GGJ2017\build_Data\Managed\UnityEngine.dll (this message is harmless)
+Loading D:\Dev\GGJ2017\build_Data\Managed\UnityEngine.dll into Unity Child Domain
+Platform assembly: D:\Dev\GGJ2017\build_Data\Managed\Assembly-CSharp-firstpass.dll (this message is harmless)
+Loading D:\Dev\GGJ2017\build_Data\Managed\Assembly-CSharp-firstpass.dll into Unity Child Domain
+Platform assembly: D:\Dev\GGJ2017\build_Data\Managed\Assembly-CSharp.dll (this message is harmless)
+Loading D:\Dev\GGJ2017\build_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
+Platform assembly: D:\Dev\GGJ2017\build_Data\Managed\UnityEngine.UI.dll (this message is harmless)
+Loading D:\Dev\GGJ2017\build_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
+Platform assembly: D:\Dev\GGJ2017\build_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
+Loading D:\Dev\GGJ2017\build_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
+Platform assembly: D:\Dev\GGJ2017\build_Data\Managed\UnityEngine.PlaymodeTestsRunner.dll (this message is harmless)
+Loading D:\Dev\GGJ2017\build_Data\Managed\UnityEngine.PlaymodeTestsRunner.dll into Unity Child Domain
+Platform assembly: D:\Dev\GGJ2017\build_Data\Managed\UnityEngine.Analytics.dll (this message is harmless)
+Loading D:\Dev\GGJ2017\build_Data\Managed\UnityEngine.Analytics.dll into Unity Child Domain
+- Completed reload, in  0.171 seconds
+Platform assembly: D:\Dev\GGJ2017\build_Data\Managed\System.Core.dll (this message is harmless)
+Platform assembly: D:\Dev\GGJ2017\build_Data\Managed\System.dll (this message is harmless)
+desktop: 2560x1600 60Hz; virtual: 2560x1600 at 0,0
+<RI> Initializing input.
+<RI> Input initialized.
+<RI> Initialized touch support.
+UnloadTime: 4.163346 ms
+Setting up 1 worker threads for Enlighten.
+  Thread -> id: 1df0 -> priority: 1 
+Unloading 6 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 9.115567 ms
+Default clip could not be found in attached animations list.
+ 
+(Filename:  Line: 403)
+
+
+Unloading 9 unused Assets to reduce memory usage. Loaded Objects now: 518.
+Total: 0.318621 ms (FindLiveObjects: 0.078769 ms CreateObjectMapping: 0.038596 ms MarkObjects: 0.190621 ms  DeleteObjects: 0.009452 ms)
+

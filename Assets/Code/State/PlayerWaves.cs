@@ -72,8 +72,9 @@ public class PlayerWaves : MonoBehaviour
 			float uniformLifeTime = wave.CurrentLifeTimeSeconds / wave.MaxLifeTimeSeconds;
 
 			SpriteRenderer renderer = wave.Obj.GetComponent<SpriteRenderer>();
-			//renderer.color *= new Color( 1.0f, 1.0f, 1.0f, uniformLifeTime);
-			
+			renderer.color *= new Color( 1.0f, 1.0f, 1.0f, 0.0f);
+			renderer.color += new Color(0f,0f,0f, uniformLifeTime);
+
 			// update lifetime and kill waves that died
 			if (wave.CurrentLifeTimeSeconds <= 0.0f) {
 				wavesToDelete.Add (wave);
