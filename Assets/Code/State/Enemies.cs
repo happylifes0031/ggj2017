@@ -141,7 +141,7 @@ public class Enemies : MonoBehaviour
 					collider.radius *= 5.0f;
 					wolf.tag = "Wolf";
 
-					source.PlayOneShot(ExplosionSound);
+					//source.PlayOneShot(ExplosionSound);
                 }
 			}
 

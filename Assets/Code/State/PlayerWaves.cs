@@ -50,7 +50,7 @@ public class PlayerWaves : MonoBehaviour
 		
 		Waves.Add(wave);
 		
-        source.PlayOneShot(WaveSound, 0.3f);
+        //source.PlayOneShot(WaveSound, 0.3f);
 	}
 
 	void Start()
