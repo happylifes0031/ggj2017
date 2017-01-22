@@ -39,6 +39,7 @@ public class PlayerWaves : MonoBehaviour
 		Quaternion rotateUpTowardsNormal = Quaternion.FromToRotation(Vector3.up, worldNormal);
 		wave.Obj = Object.Instantiate(basePlayerWave, worldPosNoZ, rotateUpTowardsNormal);
 		wave.Obj.SetActive(true);
+		wave.Obj.tag = "Wave";
 		wave.Obj.transform.localScale = new Vector3(0.0f, 0.0f, 1.0f);
 
 		CircleCollider2D sphereColider = wave.Obj.AddComponent<CircleCollider2D>();

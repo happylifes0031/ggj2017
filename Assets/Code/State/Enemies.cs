@@ -2,6 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public class Wolf
+{
+	public float Timer = 0;
+	public GameObject Obj;
+}
+
 public class Enemies : MonoBehaviour
 {
 	public GameObject shepard;
@@ -11,7 +17,7 @@ public class Enemies : MonoBehaviour
 	private GameObject wolfPrefab;
 
 	public List<GameObject> BadShepards { get; private set; }
-	public List<GameObject> WolfInSheepsClothes { get; private set; }
+	public List<Wolf> WolfInSheepsClothes { get; private set; }
 
 	void preloadShepard()
 	{
@@ -50,13 +56,16 @@ public class Enemies : MonoBehaviour
 		GameObject wolf = Object.Instantiate(wolfPrefab, spawnPosWorld, Quaternion.identity);
 		wolf.SetActive(true);
 
-		WolfInSheepsClothes.Add(wolf);
+		Wolf w = new Wolf();
+		w.Obj = wolf;
+
+		WolfInSheepsClothes.Add(w);
 	}
 
 	void Start ()
 	{
 		BadShepards = new List<GameObject>();
-		WolfInSheepsClothes = new List<GameObject>();
+		WolfInSheepsClothes = new List<Wolf>();
 
 		preloadWolf();
 
@@ -67,6 +76,21 @@ public class Enemies : MonoBehaviour
 	Vector3 randomMovement = Vector3.zero;
 	void Update ()
 	{
+		List<Wolf> wolfToDelete = new List<Wolf>();
+		foreach (Wolf w in WolfInSheepsClothes)
+		{
+			if (w.Timer >= 2.0f)
+			{
+				wolfToDelete.Add(w);
+            }
+		}
+
+		foreach (Wolf w in wolfToDelete)
+		{
+			DestroyObject(w.Obj);
+			WolfInSheepsClothes.Remove(w);
+		}
+
 		Vector3 flockCenter = GameState.gameState.horde.CenterOfHorde;
 
 		// spawn new enemies
@@ -81,8 +105,10 @@ public class Enemies : MonoBehaviour
 			AddNewWolf(flockCenter);
 		}
 
-		foreach (GameObject wolf in WolfInSheepsClothes)
+		foreach (Wolf w in WolfInSheepsClothes)
 		{
+			GameObject wolf = w.Obj;
+
 			float distance = Vector3.Distance(flockCenter, wolf.transform.position);
 
 			float speedMul = Mathf.SmoothStep(8.0f, .6f, Mathf.Clamp(distance, 0f, 12f) / 12.0f);
@@ -100,8 +126,14 @@ public class Enemies : MonoBehaviour
 
 			if(distance < 2.0f)
 			{
-				CircleCollider2D circle = wolf.GetComponent<CircleCollider2D>();
-				//circle.radius = 10.0f;
+				w.Timer += Time.deltaTime;
+				
+				if(w.Timer >= 2.0f)
+				{
+					CircleCollider2D collider = wolf.GetComponent<CircleCollider2D>();
+					collider.radius *= 5.0f;
+					wolf.tag = "Wolf";
+				}
 			}
 		}
 	}

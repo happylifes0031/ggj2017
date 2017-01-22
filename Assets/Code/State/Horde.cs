@@ -12,26 +12,31 @@ public class HordeNode : MonoBehaviour
 	{
 
 	}
-
-	void OnCollisionStay2D(Collision2D coll)
-	{
-		Rigidbody2D rigidBody = GetComponent<Rigidbody2D>();
-
-		foreach (ContactPoint2D contact in coll.contacts)
-		{
-			if (contact.otherCollider.gameObject.tag != "Node")
-				rigidBody.AddForce(contact.normal * 40.0f);
-		}
-	}
-
+	
     void OnCollisionEnter2D(Collision2D coll)
 	{
 		Rigidbody2D rigidBody = GetComponent<Rigidbody2D>();
 
 		foreach (ContactPoint2D contact in coll.contacts)
 		{
-			if(contact.otherCollider.gameObject.tag == "Node")
+			if(coll.gameObject.tag == "Node")
 				rigidBody.AddForce(contact.normal * 220.0f);
+			if (coll.gameObject.tag == "Wave")
+				rigidBody.AddForce(contact.normal * 2040.0f);
+			if (coll.gameObject.tag == "Wolf")
+			{
+				if(Vector3.Distance(transform.position, 
+					coll.gameObject.transform.position) < 5.0f)
+				{
+					GameState.gameState.horde.Nodes.Remove(this.gameObject);
+
+					DestroyObject(this.gameObject);
+				}
+
+				rigidBody.AddForce(contact.normal * 3000f);
+
+			}
+
 		}
 	}
 }
@@ -48,24 +53,6 @@ public class Horde : MonoBehaviour
 
 	void CreateNodePrefab()
 	{
-		#region
-		/* Might need for animation
-		var model = (Avatar)Resources.Load("Models/NodeModel", typeof(Avatar));
-
-		var controllers = Resources.LoadAll("Models/NodeModel", typeof(RuntimeAnimatorController));
-		Animator animator = baseNodePrefab.AddComponent<Animator>();
-		animator.avatar = model;
-		//animator.runtimeAnimatorController = (RuntimeAnimatorController)controllers[0];
-
-		Animation animation = baseNodePrefab.AddComponent<Animation>();
-		//var clips = Resources.LoadAll("Models/NodeModel", typeof(AnimationClip));
-
-		//animation.clip = (AnimationClip)clips[0];
-		//animation.playAutomatically = true;
-		//animation.enabled = true;
-		*/
-		#endregion
-
 		baseNodePrefab = Instantiate(Test); ;
 		baseNodePrefab.SetActive(false);
 		baseNodePrefab.tag = "Node";
