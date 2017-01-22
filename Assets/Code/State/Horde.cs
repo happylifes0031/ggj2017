@@ -13,14 +13,25 @@ public class HordeNode : MonoBehaviour
 
 	}
 
-	//void OnCollisionStay2D(Collision2D coll)
+	void OnCollisionStay2D(Collision2D coll)
+	{
+		Rigidbody2D rigidBody = GetComponent<Rigidbody2D>();
+
+		foreach (ContactPoint2D contact in coll.contacts)
+		{
+			if (contact.otherCollider.gameObject.tag != "Node")
+				rigidBody.AddForce(contact.normal * 40.0f);
+		}
+	}
+
     void OnCollisionEnter2D(Collision2D coll)
 	{
 		Rigidbody2D rigidBody = GetComponent<Rigidbody2D>();
 
 		foreach (ContactPoint2D contact in coll.contacts)
 		{
-			rigidBody.AddForce(contact.normal * 20.0f);
+			if(contact.otherCollider.gameObject.tag == "Node")
+				rigidBody.AddForce(contact.normal * 220.0f);
 		}
 	}
 }
@@ -57,6 +68,7 @@ public class Horde : MonoBehaviour
 
 		baseNodePrefab = Instantiate(Test); ;
 		baseNodePrefab.SetActive(false);
+		baseNodePrefab.tag = "Node";
 		baseNodePrefab.layer = 8;
 		baseNodePrefab.AddComponent<HordeNode>();
 		Rigidbody2D rigidBody = baseNodePrefab.AddComponent<Rigidbody2D>();
@@ -115,9 +127,9 @@ public class Horde : MonoBehaviour
 		{
 			Rigidbody2D rigidBody = node.GetComponent<Rigidbody2D>();
 
-			Vector3 direction = Vector3.Scale((centerOfHorde - node.transform.position).normalized, (new Vector3(1f, 1f, 0f)));
+			Vector3 direction = Vector3.Scale((Vector3.zero - node.transform.position).normalized, (new Vector3(1f, 1f, 0f)));
 
-			rigidBody.AddForce(direction * 10.0f);
+			rigidBody.AddForce(direction * 20.0f);
 		}
 	}
 }

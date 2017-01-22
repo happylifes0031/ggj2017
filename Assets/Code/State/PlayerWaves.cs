@@ -14,9 +14,13 @@ public class PlayerWave
 
 public class PlayerWaves : MonoBehaviour
 {
-	public float LifeTimeSecondsMultiplier = 3.0f;
+	public float LifeTimeSeconds = 3.0f;
+	//public float FinalScale = 5.0f;
+
+	private float LifeTimeSecondsMultiplier = 1.0f;
 	public float StrengthUnitsSecondsMultiplier = 1.0f;
-	public float MinimumLifeTimeSeconds = 0.2f;
+	private float MinimumLifeTimeSeconds = 1.0f;
+	public float StrengthSpeedSecondsMultiplier = 1.0f;
 	
 	public List<PlayerWave> Waves { get; private set; }
 
@@ -26,7 +30,7 @@ public class PlayerWaves : MonoBehaviour
 	public void AddNewWave(Vector3 worldPos, Vector3 worldNormal, float timePressedSecond)
 	{
 		PlayerWave wave = new PlayerWave();
-		wave.MaxLifeTimeSeconds = Mathf.Max(timePressedSecond * LifeTimeSecondsMultiplier, MinimumLifeTimeSeconds);
+		wave.MaxLifeTimeSeconds = LifeTimeSeconds;// Mathf.Max(timePressedSecond * LifeTimeSecondsMultiplier, MinimumLifeTimeSeconds);
 		wave.CurrentLifeTimeSeconds = wave.MaxLifeTimeSeconds;
 		wave.ScaleUnitsPerSecond = StrengthUnitsSecondsMultiplier;
 
