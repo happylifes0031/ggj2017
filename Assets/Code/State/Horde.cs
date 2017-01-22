@@ -29,14 +29,10 @@ public class HordeNode : MonoBehaviour
 					coll.gameObject.transform.position) < 10.0f)
 				{
 					GameState.gameState.horde.Nodes.Remove(this.gameObject);
-
 					DestroyObject(this.gameObject);
 				}
-
 				rigidBody.AddForce(contact.normal * 3000f);
-
 			}
-
 		}
 	}
 }
@@ -99,6 +95,8 @@ public class Horde : MonoBehaviour
 		
         foreach (GameObject node in Nodes)
 		{
+			float strength = Nodes.Count / 100.0f;
+
 			centerOfHorde += node.transform.position;
 
 			randomCollisionCircle += Random.value;
@@ -109,7 +107,7 @@ public class Horde : MonoBehaviour
 			float rY = (Random.value * 2.0f) - 1.0f;
 
 			Rigidbody2D rigidBody = node.GetComponent<Rigidbody2D>();
-			rigidBody.AddForce(new Vector2(rX, rY) * 10.0f);
+			rigidBody.AddForce(new Vector2(rX, rY) * 10.0f * strength);
 		}
 
 		centerOfHorde = centerOfHorde / Nodes.Count;
@@ -118,11 +116,15 @@ public class Horde : MonoBehaviour
 
 		foreach (GameObject node in Nodes)
 		{
+			float strength = Nodes.Count / 100.0f;
+
 			Rigidbody2D rigidBody = node.GetComponent<Rigidbody2D>();
 
 			Vector3 direction = Vector3.Scale((Vector3.zero - node.transform.position).normalized, (new Vector3(1f, 1f, 0f)));
 
-			rigidBody.AddForce(direction * 20.0f);
+			float dist = node.transform.position.magnitude / 10.0f;
+
+			rigidBody.AddForce(direction * 20.0f * dist);
 		}
 	}
 }

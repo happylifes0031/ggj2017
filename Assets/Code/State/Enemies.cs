@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Wolf
+public class Wolf : MonoBehaviour
 {
 	public float Timer = 0;
 	public float MaximumTimer = 10.0f;
@@ -95,13 +95,21 @@ public class Enemies : MonoBehaviour
 		if (spawnTimer > newSpawnTime)
 		{
 			spawnTimer -= newSpawnTime;
-			newSpawnTime = 1.0f + Random.value * 4.0f;
+			newSpawnTime = 0.1f + Random.value * 2.0f;
 			AddNewWolf(flockCenter);
 		}
 
 		foreach (Wolf w in WolfInSheepsClothes)
 		{
 			GameObject wolf = w.Obj;
+
+			float randomMovementMul = 1.0f;
+			Vector3 target = flockCenter;
+			if(GameState.gameState.horde.Nodes.Count < 10)
+			{
+				target = GameState.gameState.horde.Nodes[0].transform.position;
+				randomMovementMul = 0;
+            }
 
 			float distance = Vector3.Distance(flockCenter, wolf.transform.position);
 
@@ -111,7 +119,7 @@ public class Enemies : MonoBehaviour
 			wolf.transform.position += direction.normalized * Time.deltaTime * 10.0f * speedMul;
 			wolf.transform.localScale = new Vector3(200, 200, 200);
 
-			randomMovement += direction * Random.value;
+			randomMovement += direction * Random.value * randomMovementMul;
 
 			float colorScale = Mathf.SmoothStep(1.0f, 0.0f, Mathf.Clamp(distance, 0f, 12f) / 12.0f);
 			MeshRenderer meshRenderer = wolf.GetComponent<MeshRenderer>();
@@ -134,4 +142,5 @@ public class Enemies : MonoBehaviour
 			w.MaximumTimer -= Time.deltaTime;
 		}
 	}
+
 }
