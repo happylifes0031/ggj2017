@@ -6,7 +6,9 @@
 /// </summary>
 public class GameState : MonoBehaviour
 {
+	public Enemies enemies { get; private set; }
 	public PlayerWaves playerWaves { get; private set; }
+	public Horde horde { get; private set; }
 	public static GameState gameState;
 
 	void Awake()
@@ -14,5 +16,7 @@ public class GameState : MonoBehaviour
 		// Make sure there's only one instance of the game state
 		gameState = this;
 		playerWaves = this.gameObject.GetComponent<PlayerWaves>();
+		enemies = this.gameObject.GetComponent<Enemies>();
+		horde = this.gameObject.GetComponent<Horde>();
 	}
 }

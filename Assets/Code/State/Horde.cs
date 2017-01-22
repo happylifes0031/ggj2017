@@ -33,6 +33,8 @@ public class Horde : MonoBehaviour
 
 	public GameObject Test;
 
+	public Vector3 CenterOfHorde { get; private set; }
+
 	void CreateNodePrefab()
 	{
 		#region
@@ -57,8 +59,6 @@ public class Horde : MonoBehaviour
 		baseNodePrefab.SetActive(false);
 		baseNodePrefab.layer = 8;
 		baseNodePrefab.AddComponent<HordeNode>();
-		SphereCollider collider = baseNodePrefab.GetComponent<SphereCollider>();
-		DestroyImmediate(collider);
 		Rigidbody2D rigidBody = baseNodePrefab.AddComponent<Rigidbody2D>();
 		rigidBody.gravityScale = 0.0f;
 		CircleCollider2D sphereCollider = baseNodePrefab.AddComponent<CircleCollider2D>();
@@ -87,7 +87,7 @@ public class Horde : MonoBehaviour
 	}
 
 	// Update is called once per frame
-	float test = 0.0f;
+	float randomCollisionCircle = 0.0f;
 	void Update()
 	{
 		Vector3 centerOfHorde = Vector3.zero;
@@ -96,9 +96,9 @@ public class Horde : MonoBehaviour
 		{
 			centerOfHorde += node.transform.position;
 
-			test += Random.value;
+			randomCollisionCircle += Random.value;
 			CircleCollider2D circle = node.GetComponent<CircleCollider2D>();
-			circle.radius = 0.005f + ((Mathf.Sin(test) + 1.0f) * 0.002f);
+			circle.radius = 0.005f + ((Mathf.Sin(randomCollisionCircle) + 1.0f) * 0.002f);
 
 			float rX = (Random.value * 2.0f) - 1.0f;
 			float rY = (Random.value * 2.0f) - 1.0f;
@@ -107,7 +107,9 @@ public class Horde : MonoBehaviour
 			rigidBody.AddForce(new Vector2(rX, rY) * 10.0f);
 		}
 
-		centerOfHorde /= Nodes.Count;
+		centerOfHorde = centerOfHorde / Nodes.Count;
+		CenterOfHorde = centerOfHorde;
+		CenterOfHorde.Scale(new Vector3(1f, 1f, 0f));
 
 		foreach (GameObject node in Nodes)
 		{
