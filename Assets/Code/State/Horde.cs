@@ -48,8 +48,10 @@ public class Horde : MonoBehaviour
 	public static Horde horde;
 	public List<GameObject> Nodes { get; private set; }
 	public GameObject Test;
+	public float TotalTime;
 
 	public Vector3 CenterOfHorde { get; private set; }
+	private float startTime;
 
 	void CreateNodePrefab()
 	{
@@ -66,6 +68,8 @@ public class Horde : MonoBehaviour
 	void Awake ()
 	{
 		horde = this;
+		startTime = Time.time;
+		TotalTime = 0f;
 		CreateNodePrefab();
 
 		//
@@ -91,6 +95,7 @@ public class Horde : MonoBehaviour
 	void Update()
 	{
 		Vector3 centerOfHorde = Vector3.zero;
+		TotalTime = Time.time - startTime;
 		
         foreach (GameObject node in Nodes)
 		{

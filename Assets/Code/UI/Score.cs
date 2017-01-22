@@ -7,7 +7,6 @@ public class Score : MonoBehaviour {
 	public GameObject ScorePrefab;
 	public int initialFontSize = 90;
 	public float panicColorShiftSpeed = 0.4f;
-	public int panicFontSizeIncrease = 5;
 
 	private float panicLevel = 0f;
 	private List<GameObject> nodes;
@@ -23,7 +22,6 @@ public class Score : MonoBehaviour {
 		ScorePrefab = Instantiate (ScorePrefab);
 		ScorePrefab.transform.SetParent (canvas.transform, false);
 		scoreText = ScorePrefab.GetComponent<Text> ();
-		scoreText.fontSize = initialFontSize;
 	}
 
 	// Update is called once per frame
@@ -31,7 +29,6 @@ public class Score : MonoBehaviour {
 		int currentScore = nodes.Count;
 
 		scoreText.text = currentScore.ToString();
-
 
 		if (currentScore < previousScore) {
 			panicLevel = updatePanicLevel (currentScore);
@@ -45,10 +42,6 @@ public class Score : MonoBehaviour {
 			currentColor += aBitMoreRed;
 
 			scoreText.color = currentColor;
-		}
-
-		if (currentScore % 10 == 0) {
-			scoreText.fontSize += panicFontSizeIncrease;
 		}
 
 		previousScore = currentScore;
