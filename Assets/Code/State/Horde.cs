@@ -26,7 +26,7 @@ public class HordeNode : MonoBehaviour
 			if (coll.gameObject.tag == "Wolf")
 			{
 				if(Vector3.Distance(transform.position, 
-					coll.gameObject.transform.position) < 5.0f)
+					coll.gameObject.transform.position) < 10.0f)
 				{
 					GameState.gameState.horde.Nodes.Remove(this.gameObject);
 

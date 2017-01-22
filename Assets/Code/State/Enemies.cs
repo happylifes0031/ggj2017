@@ -5,11 +5,16 @@ using UnityEngine;
 public class Wolf
 {
 	public float Timer = 0;
+	public float MaximumTimer = 10.0f;
 	public GameObject Obj;
 }
 
 public class Enemies : MonoBehaviour
 {
+	public float MaxTimeAlive = 30.0f;
+	float newSpawnTime = 0;
+	float spawnTimer = 0;
+
 	public GameObject shepard;
 	public GameObject wolf;
 
@@ -38,26 +43,22 @@ public class Enemies : MonoBehaviour
 		Rigidbody2D rigidBody = wolfPrefab.AddComponent<Rigidbody2D>();
 		rigidBody.gravityScale = 0.0f;
 		CircleCollider2D sphereCollider = wolfPrefab.AddComponent<CircleCollider2D>();
-		sphereCollider.radius = 0.015f;
+		sphereCollider.radius = 0.01f;
 	}
-
-	void AddNewShepard(Vector3 centerOfHorde)
-	{
-
-	}
-
+	
 	void AddNewWolf(Vector3 centerOfHorde)
 	{									 
 		float xRand = (Random.value * 2f) - 1f;
 		float yRand = (Random.value * 2f) - 1f;
 
-		Vector3 spawnPosWorld = centerOfHorde + (new Vector3(xRand, yRand)).normalized * 40.0f;
+		Vector3 spawnPosWorld = centerOfHorde + (new Vector3(xRand, yRand)).normalized * 140.0f;
 
 		GameObject wolf = Object.Instantiate(wolfPrefab, spawnPosWorld, Quaternion.identity);
 		wolf.SetActive(true);
 
 		Wolf w = new Wolf();
 		w.Obj = wolf;
+		w.MaximumTimer = MaxTimeAlive;
 
 		WolfInSheepsClothes.Add(w);
 	}
@@ -68,8 +69,6 @@ public class Enemies : MonoBehaviour
 		WolfInSheepsClothes = new List<Wolf>();
 
 		preloadWolf();
-
-		preloadShepard();
 		
 	}
 
@@ -79,7 +78,7 @@ public class Enemies : MonoBehaviour
 		List<Wolf> wolfToDelete = new List<Wolf>();
 		foreach (Wolf w in WolfInSheepsClothes)
 		{
-			if (w.Timer >= 2.0f)
+			if (w.Timer >= 2.0f || w.MaximumTimer <= 0.0f)
 			{
 				wolfToDelete.Add(w);
             }
@@ -92,16 +91,11 @@ public class Enemies : MonoBehaviour
 		}
 
 		Vector3 flockCenter = GameState.gameState.horde.CenterOfHorde;
-
-		// spawn new enemies
-		if(Input.GetKeyDown(KeyCode.A))
+		spawnTimer += Time.deltaTime;
+		if (spawnTimer > newSpawnTime)
 		{
-			AddNewShepard(flockCenter);
-		}
-
-		// spawn new enemies
-		if (Input.GetKeyDown(KeyCode.B))
-		{
+			spawnTimer -= newSpawnTime;
+			newSpawnTime = 1.0f + Random.value * 4.0f;
 			AddNewWolf(flockCenter);
 		}
 
@@ -115,26 +109,29 @@ public class Enemies : MonoBehaviour
 
 			Vector3 direction = flockCenter - wolf.transform.position;
 			wolf.transform.position += direction.normalized * Time.deltaTime * 10.0f * speedMul;
-			
+			wolf.transform.localScale = new Vector3(200, 200, 200);
+
 			randomMovement += direction * Random.value;
 
 			float colorScale = Mathf.SmoothStep(1.0f, 0.0f, Mathf.Clamp(distance, 0f, 12f) / 12.0f);
 			MeshRenderer meshRenderer = wolf.GetComponent<MeshRenderer>();
-			meshRenderer.material.color = Color.Lerp(meshRenderer.material.color, new Color(1, 0.0f, 0.0f, 1f), colorScale);
-
+			meshRenderer.material.color = new Color(1, 0.0f, 0.0f, w.MaximumTimer / MaxTimeAlive);
+			
 			wolf.transform.position += randomMovement.normalized * 15f * Time.deltaTime;
 
 			if(distance < 2.0f)
 			{
 				w.Timer += Time.deltaTime;
 				
-				if(w.Timer >= 2.0f)
+				if(w.Timer >= 2.0f || w.MaximumTimer <= 0.0f)
 				{
 					CircleCollider2D collider = wolf.GetComponent<CircleCollider2D>();
 					collider.radius *= 5.0f;
 					wolf.tag = "Wolf";
 				}
 			}
+
+			w.MaximumTimer -= Time.deltaTime;
 		}
 	}
 }
