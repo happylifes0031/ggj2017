@@ -29,8 +29,8 @@ public class Horde : MonoBehaviour
 {
 	private GameObject baseNodePrefab;
 
+	public static Horde horde;
 	public List<GameObject> Nodes { get; private set; }
-
 	public GameObject Test;
 
 	public Vector3 CenterOfHorde { get; private set; }
@@ -64,8 +64,9 @@ public class Horde : MonoBehaviour
 		CircleCollider2D sphereCollider = baseNodePrefab.AddComponent<CircleCollider2D>();
 	}
 
-	void Start ()
+	void Awake ()
 	{
+		horde = this;
 		CreateNodePrefab();
 
 		//
