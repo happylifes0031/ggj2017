@@ -91,7 +91,10 @@ public class Horde : MonoBehaviour
 	void Update()
 	{
 		Vector3 centerOfHorde = Vector3.zero;
-		TotalTime = Time.time - startTime;
+
+		if (Nodes.Count > 0) {
+			TotalTime = Time.time - startTime;
+		}
 		
         foreach (GameObject node in Nodes)
 		{
@@ -126,5 +129,9 @@ public class Horde : MonoBehaviour
 
 			rigidBody.AddForce(direction * 20.0f * dist);
 		}
+
+//		if (Nodes.Count < 1) {
+//
+//		}
 	}
 }
