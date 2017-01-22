@@ -49,9 +49,8 @@ public class PlayerWaves : MonoBehaviour
 		sphereColider.radius = 0.5f;
 		
 		Waves.Add(wave);
-
-
-		source.PlayOneShot(WaveSound);
+		
+        source.PlayOneShot(WaveSound, 0.3f);
 	}
 
 	void Start()
