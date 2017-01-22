@@ -11,6 +11,8 @@ public class Wolf : MonoBehaviour
 
 public class Enemies : MonoBehaviour
 {
+	public AudioClip ExplosionSound;
+	private AudioSource source;
 	public float MaxTimeAlive = 30.0f;
 	float newSpawnTime = 0;
 	float spawnTimer = 0;
@@ -67,6 +69,8 @@ public class Enemies : MonoBehaviour
 	{
 		BadShepards = new List<GameObject>();
 		WolfInSheepsClothes = new List<Wolf>();
+
+		source = gameObject.AddComponent<AudioSource>();
 
 		preloadWolf();
 		
@@ -136,7 +140,9 @@ public class Enemies : MonoBehaviour
 					CircleCollider2D collider = wolf.GetComponent<CircleCollider2D>();
 					collider.radius *= 5.0f;
 					wolf.tag = "Wolf";
-				}
+
+					source.PlayOneShot(ExplosionSound);
+                }
 			}
 
 			w.MaximumTimer -= Time.deltaTime;

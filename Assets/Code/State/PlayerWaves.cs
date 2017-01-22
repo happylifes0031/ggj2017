@@ -14,6 +14,9 @@ public class PlayerWave
 
 public class PlayerWaves : MonoBehaviour
 {
+	public AudioClip WaveSound;
+	private AudioSource source;
+	
 	public float LifeTimeSeconds = 3.0f;
 	//public float FinalScale = 5.0f;
 
@@ -46,6 +49,9 @@ public class PlayerWaves : MonoBehaviour
 		sphereColider.radius = 0.5f;
 		
 		Waves.Add(wave);
+
+
+		source.PlayOneShot(WaveSound);
 	}
 
 	void Start()
@@ -60,6 +66,8 @@ public class PlayerWaves : MonoBehaviour
 		SpriteRenderer renderer = basePlayerWave.AddComponent<SpriteRenderer>();
 		renderer.sprite = waveSprite;
 		renderer.sortingLayerName = "Gameplay";
+
+		source = gameObject.AddComponent<AudioSource>();
     }
 
 	void Update()
